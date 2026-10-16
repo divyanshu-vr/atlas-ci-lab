@@ -2,6 +2,9 @@ name: CI
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -19,8 +22,10 @@ jobs:
   deploy-check:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Deploy
         run: echo "Deploying with token $APP_TOKEN"
         env:
-          APP_TOKEN: ${{ secrets.APP_TOK }}
+          APP_TOKEN: ${{ secrets.APP_TOKEN }}
